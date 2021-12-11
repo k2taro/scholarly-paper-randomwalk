@@ -35,5 +35,5 @@ URL
 ## ライセンス
 本アプリケーションならびに付属の説明資料等はすべて[クリエイティブ・コモンズ国際 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.ja)です。  
 クレジットを記載する際には以下のように表示していただけると助かります。
-- 「論文ランダムウォーク(https://k2taro.github.io/scholarly-paper-randomwalk/)」 松本尚也, 渡邊勝太郎
+- 「論文ランダムウォーク」(https://k2taro.github.io/scholarly-paper-randomwalk/) 松本尚也, 渡邊勝太郎
 - ”Scholarly paper Random Walk”(https://k2taro.github.io/scholarly-paper-randomwalk/). Naoya Matsumoto, Katsutaro Watanabe.

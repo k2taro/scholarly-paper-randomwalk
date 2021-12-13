@@ -17,26 +17,26 @@
 - [10.1143/JPSJ.73.2593](https://doi.org/10.1143/JPSJ.73.2593){:target="_blank"}, 113番目の元素ニホニウム発見の主要な論文の一つ  
 - [10.1016/j.cell.2006.07.024](https://doi.org/10.1016/j.cell.2006.07.024){:target="_blank"}, 2021年ノーベル賞のiPS細胞発見の主要な論文の一つ  
 
-<img src="image1.png" style="border: 1px red solid;">
+<img src="image1.png" style="border: 1px black solid;">
 
 最初の論文が表示されます。  
 
 ### ２．ランダムウォークする
 論文をクリックすると、論文の基本情報が表示されます。  
-|![image2](image2.png)|
-|:-:|  
+
+<img src="image2.png" style="border: 1px black solid;">
 
 「引用している論文を探す」「引用されている論文を探す」のいずれかをクリックすることでその論文が”_引用している_”論文、もしくは、その論文が”_引用されている_”論文、からランダムで一報追加されます。これを繰り返すことでランダムウォークできます。  
 同じ論文から、「引用している論文を探す」「引用されている論文を探す」の両方にもランダムウォークを伸ばすことができますし、「引用している論文を探す」の中で複数の論文にランダムウォークを伸ばすこともできます。(「引用されている論文を探す」も同様)
-|![image3](image3.png)|
-|:-:|  
+
+<img src="image3.png" style="border: 1px black solid;">
 
 ### ３．ランダムウォークした論文群のレポートを見る
 「レポートを見る」ボタンを押すとランダムウォークした論文群の情報をサマリするレポート画面に遷移します。  
 ※この処理はAPIをもう一度呼び出す必要があるため、最大数分程度、処理に時間がかかります。  
 レポート画面にある「レポート出力」ボタンからhtmlページとしてダウンロードすることもできます。  
-|![image4](image4.png)|
-|:-:|  
+
+<img src="image4.png" style="border: 1px black solid;">
 
 ## 利用しているデータ
 - [REST API FOR COCI, THE OPENCITATIONS INDEX OF CROSSREF OPEN DOI-TO-DOI REFERENCES](https://opencitations.net/index/coci/api/v1){:target="_blank"}.

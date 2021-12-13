@@ -16,9 +16,8 @@
 プリセットされている論文は以下です。  
 - [10.1143/JPSJ.73.2593](https://doi.org/10.1143/JPSJ.73.2593){:target="_blank"}, 113番目の元素ニホニウム発見の主要な論文の一つ  
 - [10.1016/j.cell.2006.07.024](https://doi.org/10.1016/j.cell.2006.07.024){:target="_blank"}, 2021年ノーベル賞のiPS細胞発見の主要な論文の一つ  
-  
-|![image1](image1.png)|
-|:-:|  
+
+<img src="image1.png" style="border: 1px red solid;">
 
 最初の論文が表示されます。  
 

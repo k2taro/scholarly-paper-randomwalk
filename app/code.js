@@ -13,13 +13,14 @@ var cy = window.cy = cytoscape({
         {
             selector: 'node',
             style: {
-                'content': 'data(title)',
+                //'content': 'data(title)',
+                'content': function(e) {return 'No.' + e.data('no') + ',' + e.data('year') + ':' + cutStr(e.data('title'))},
                 'width': '200',
                 'height': '200',
                 'text-opacity': 4,
                 'text-valign': 'center',
                 'text-halign': 'center',
-                'font-size': '80',
+                'font-size': '40',
                 'background-color': 'data(color1)'
             }
         },
@@ -41,9 +42,9 @@ var cy = window.cy = cytoscape({
             style: {
                 'curve-style': 'bezier',
                 'width': 8,
-                'target-arrow-shape': 'triangle',
+                'source-arrow-shape': 'triangle',
                 'line-color': '#9818D6',
-                'target-arrow-color': '#9818D6',
+                'source-arrow-color': '#9818D6',
                 'arrow-scale': 2,
             }
         }
@@ -67,197 +68,6 @@ var cy = window.cy = cytoscape({
     wheelSensitivity : 0.2,
 });
 
-// 初期ノードの追加
-function searchDOI(){
-  var input = document.getElementById("doi").value;
-
-  try {
-    var url = 'https://opencitations.net/index/coci/api/v1/metadata/'+input;
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-      try {
-        if(xhr.readyState == 4) {
-          if(xhr.status == 200) {
-            var json2 = JSON.parse(xhr.responseText);
-            var title = json2[0].title;
-            var year = json2[0].year;
-            var doi = json2[0].doi;
-            var author = json2[0].author;
-            var source_title = json2[0].source_title;
-            console.log("title:"+title+"\nyear:"+year+"\ndoi:"+doi+"\nauthor:"+author+"\nsource_title:"+source_title);
-            if(!years.includes(year)){
-              cy.add({group:'nodes',data:{id: year, color1: '#EDEDED'}});
-              years.push(year);
-            }
-            cy.add({group:'nodes',data:{id: doi, title: title, color1: '#FF5151', parent: year, EN: 'title' , author: author ,source_title: source_title}});
-            dois.push(doi);
-            cy.layout({name:'dagre'}).run();
-            cy.fit();
-            drawTabulator();
-          } else {
-            //alert("error:" + xhr.status + "," + xhr.responseText);
-            //throw new Error("error");
-          }
-        }
-      } catch (e) {
-        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
-      }
-    }
-    xhr.send();
-  } catch(e) {
-    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
-  }
-}
-
-function arrayShuffle(array) {
-  for(var i = (array.length - 1); 0 < i; i--){
-    var r = Math.floor(Math.random() * (i + 1));
-    var tmp = array[i];
-    array[i] = array[r];
-    array[r] = tmp;
-  }
-  return array;
-}
-
-function getCiting(doi) {
-  console.log("citing:"+doi);
-  //citing
-  var url = 'https://opencitations.net/index/coci/api/v1/references/'+doi;
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-    if(xhr.readyState == 4) {
-      if(xhr.status == 200) {
-        addCitingNode(xhr.responseText);
-      } else {
-      //alert("error:" + xhr.status + "," + xhr.responseText);
-      }
-    }
-  }
-  xhr.send();
-}
-
-function addCitingNode(response){
-  var json = JSON.parse(response);
-  // 取得アルゴリズム
-  console.log(json[0]);
-  console.log(Object.keys(json).length)
-  var tmp_array = [...Array(Object.keys(json).length)].map((_, i) => i);
-  arrayShuffle(tmp_array);
-  var target = json[0];
-  for(var i = (tmp_array.length - 1); 0 < i; i--){
-    target = json[tmp_array[i]];
-    if( !dois.includes(target.cited) ){
-      break;
-    }
-  }
-  var cited = target.cited;
-  var citing = target.citing;
-  console.log("cited:"+cited+"  citing:"+citing);
-  
-  var url = 'https://opencitations.net/index/coci/api/v1/metadata/'+cited;
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-    if(xhr.readyState == 4) {
-      if(xhr.status == 200) {
-        var json2 = JSON.parse(xhr.responseText);
-        var title = json2[0].title;
-        var year = json2[0].year;
-        var doi = json2[0].doi;
-        var author = json2[0].author;
-        var source_title = json2[0].source_title;
-        console.log("title:"+title+"\nyear:"+year+"\ndoi:"+doi+"\nauthor:"+author+"\nsource_title:"+source_title);
-        if(!years.includes(year)){
-          cy.add({group:'nodes',data:{id: year, color1: '#EDEDED'}});
-          years.push(year);
-        }
-        cy.add({group:'nodes',data:{id: doi, title: title, color1: '#FFA41B', parent: year, EN: 'title' , author: author ,source_title: source_title}});
-        dois.push(doi);
-        cy.add({group:'edges',data: {source: cited, target: citing}});
-        cy.layout({name:'dagre'}).run();
-        cy.fit();
-        drawTabulator();
-      } else {
-        //("error:" + xhr.status + "," + xhr.responseText);
-      }
-    }
-  }
-  xhr.send();
-}
-
-function getCited(doi) {
-  console.log("cited:"+doi);
-  //cited
-  var url = 'https://opencitations.net/index/coci/api/v1/citations/'+doi;
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-    if(xhr.readyState == 4) {
-      if(xhr.status == 200) {
-        addCitedNode(xhr.responseText);
-      } else {
-      //alert("error:" + xhr.status + "," + xhr.responseText);
-      }
-    }
-  }
-  xhr.send();
-}
-
-function addCitedNode(response){
-  var json = JSON.parse(response);
-  // 取得アルゴリズム
-  console.log(json[0]);
-  console.log(Object.keys(json).length)
-  var tmp_array = [...Array(Object.keys(json).length)].map((_, i) => i);
-  arrayShuffle(tmp_array);
-  var target = json[0];
-  for(var i = (tmp_array.length - 1); 0 < i; i--){
-    target = json[tmp_array[i]];
-    if( !dois.includes(target.cited) ){
-      break;
-    }
-  }
-  var cited = target.cited;
-  var citing = target.citing;
-  console.log("cited:"+cited+"  citing:"+citing);
-  
-  var url = 'https://opencitations.net/index/coci/api/v1/metadata/'+citing;
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-    if(xhr.readyState == 4) {
-      if(xhr.status == 200) {
-        var json2 = JSON.parse(xhr.responseText);
-        var title = json2[0].title;
-        var year = json2[0].year;
-        var doi = json2[0].doi;
-        var author = json2[0].author;
-        var source_title = json2[0].source_title;
-        console.log("title:"+title+"\nyear:"+year+"\ndoi:"+doi+"\nauthor:"+author+"\nsource_title:"+source_title);
-        if(!years.includes(year)){
-          cy.add({group:'nodes',data:{id: year, color1: '#EDEDED'}});
-          years.push(year);
-        }
-        cy.add({group:'nodes',data:{id: doi, title: title, color1: '#FFA41B', parent: year, EN: 'title' , author: author ,source_title: source_title}});
-        dois.push(doi);
-        cy.add({group:'edges',data: {source: cited, target: citing}});
-        cy.layout({name:'dagre'}).run();
-        cy.fit();
-        drawTabulator();
-      } else {
-        //alert("error:" + xhr.status + "," + xhr.responseText);
-      }
-    }
-  }
-  xhr.send();
-}
 
 // nodeのpopup
 var makeTippy = function(node, text) {
@@ -267,11 +77,14 @@ var makeTippy = function(node, text) {
         getReferenceClientRect: ref.getBoundingClientRect,
         trigger: 'manual',
         content: function() {
+            var no = node.data('no');
             var title = node.data('title');
             var doi = node.data('id').replace(/\*$/, "");
-            var year = node.data('parent');
+            var year = node.data('year');
+            var author = node.data('author');
+            var source_title = node.data('source_title');
             var div = document.createElement('div');
-                div.innerHTML = '<p>'+ title +'</p><p>doi : <a href = "https://doi.org/' + doi + '" target="_blank">' + doi + '</a></p><p>year : ' + year + '</p><p><form><input type="button" id="'+doi+'" value="この論文が引用している論文を探す" onclick="getCiting(this.id)" ></form></p><p><form><input type="button" id="'+doi+'" value="この論文を引用している論文を探す" onclick="getCited(this.id)" ></form></p>';
+                div.innerHTML = '<p>No.' + no + '</p><p>'+ cutStr(title) +'</p><p>doi : <a href = "https://doi.org/' + doi + '" target="_blank">' + doi + '</a></p><p>year : ' + year + '</p><p>author : ' + cutStr(author) + '</p><p>source_title : ' + cutStr(source_title) + '</p><p><form><input type="button" id="'+doi+'" value="引用している論文を探す" onclick="getCiting(this.id)" ></form></p><p><form><input type="button" id="'+doi+'" value="引用されている論文を探す" onclick="getCited(this.id)" ></form></p>';
             return div;
         },
 
@@ -294,7 +107,7 @@ var makeTippy = function(node, text) {
 
 tippy_array = [];
 cy.on('tap', 'node', function(e) {
-    if (e.target.data('parent') !== undefined) {
+    if (e.target.data('year') !== undefined) {
         temp_id = e.target.data('id');
         console.log(temp_id);
         if (tippy_array[temp_id]) {
@@ -314,23 +127,292 @@ cy.fit();
 var tabulator_data = [];
 drawTabulator();
 
+function cutStr(str){
+  if (str.length > 38) {
+    return str.substr(0,37) + "...";
+  } else {
+    return str;
+  }
+}
+
+
+// 初期ノードの追加
+function searchDOI(){
+  var input = document.getElementById("doi").value;
+
+  try {
+    var url = 'https://opencitations.net/index/coci/api/v1/metadata/'+input;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+      try {
+        if(xhr.readyState == 4) {
+          if(xhr.status == 200) {
+            if(xhr.responseText == '[]') {
+              throw new Error("error");
+            } 
+            var json2 = JSON.parse(xhr.responseText);
+            var title = json2[0].title;
+            var year = json2[0].year;
+            var doi = json2[0].doi;
+            var author = json2[0].author;
+            var source_title = json2[0].source_title;
+            console.log("title:"+title+"\nyear:"+year+"\ndoi:"+doi+"\nauthor:"+author+"\nsource_title:"+source_title);
+            //if(!years.includes(year)){
+            //  cy.add({group:'nodes',data:{id: year, color1: '#EDEDED'}});
+            //  years.push(year);
+            //}
+            cy.add({group:'nodes',data:{id: doi, no: 1, title: title, color1: '#FF5151', year: year, EN: 'title' , author: author ,source_title: source_title}});
+            dois.push(doi);
+            cy.layout({name:'dagre'}).run();
+            cy.fit();
+            drawTabulator();
+            document.getElementById("status").innerHTML = "　";
+          } else {
+            throw new Error("error");
+          }
+        }
+      } catch (e) {
+        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        return;
+      }
+    }
+    xhr.send();
+  } catch(e) {
+    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    return;
+  }
+}
+
+function arrayShuffle(array) {
+  for(var i = (array.length - 1); 0 < i; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = array[i];
+    array[i] = array[r];
+    array[r] = tmp;
+  }
+  return array;
+}
+
+function getCiting(doi) {
+  console.log("citing:"+doi);
+  //citing
+  try {
+    var url = 'https://opencitations.net/index/coci/api/v1/references/'+doi;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+      try {
+        if(xhr.readyState == 4) {
+          if(xhr.status == 200) {
+            addCitingNode(xhr.responseText);
+          } else {
+            throw new Error("error");
+          }
+        }
+      } catch (e) {
+        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        return;
+      }
+    }
+    xhr.send();
+  } catch(e) {
+    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    return;
+  }
+}
+
+function addCitingNode(response){
+  if(response == '[]') {
+    document.getElementById("status").innerHTML = "引用している論文が0件でした。";
+    return;
+  }
+  var json = JSON.parse(response);
+  // 取得アルゴリズム
+  console.log(json[0]);
+  console.log(Object.keys(json).length)
+  var tmp_array = [...Array(Object.keys(json).length)].map((_, i) => i);
+  arrayShuffle(tmp_array);
+  var target = json[0];
+  var addflg = 0;
+  for(var i = 0 ; i < tmp_array.length ; i++){
+    target = json[tmp_array[i]];
+    if( !dois.includes(target.cited) ){
+      addflg = 1;
+      break;
+    }
+  }
+  if(addflg == 0) {
+    document.getElementById("status").innerHTML = "追加できる論文がありませんでした。";
+    return;
+  }
+  var cited = target.cited;
+  var citing = target.citing;
+  console.log("cited:"+cited+"  citing:"+citing);
+  
+  try {
+    var url = 'https://opencitations.net/index/coci/api/v1/metadata/'+cited;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+      try {
+        if(xhr.readyState == 4) {
+          if(xhr.status == 200) {
+            var json2 = JSON.parse(xhr.responseText);
+            var title = json2[0].title;
+            var year = json2[0].year;
+            var doi = json2[0].doi;
+            var author = json2[0].author;
+            var source_title = json2[0].source_title;
+            console.log("title:"+title+"\nyear:"+year+"\ndoi:"+doi+"\nauthor:"+author+"\nsource_title:"+source_title);
+            //if(!years.includes(year)){
+            //  cy.add({group:'nodes',data:{id: year, color1: '#EDEDED'}});
+            //  years.push(year);
+            //}
+            cy.add({group:'nodes',data:{id: doi, no: cy.$('node[year]').length+1, title: title, color1: '#FFA41B', year: year, EN: 'title' , author: author ,source_title: source_title}});
+            dois.push(doi);
+            cy.add({group:'edges',data: {source: cited, target: citing}});
+            cy.layout({name:'dagre'}).run();
+            cy.fit();
+            drawTabulator();
+          } else {
+            throw new Error("error");
+          }
+        }
+      } catch (e) {
+        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        return;
+      }
+    }
+    xhr.send();
+  } catch(e) {
+    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    return;
+  }
+}
+
+function getCited(doi) {
+  console.log("cited:"+doi);
+  //cited
+  try {
+    var url = 'https://opencitations.net/index/coci/api/v1/citations/'+doi;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+      try {
+        if(xhr.readyState == 4) {
+          if(xhr.status == 200) {
+            addCitedNode(xhr.responseText);
+          } else {
+            throw new Error("error");
+          }
+        }
+      } catch (e) {
+        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        return;
+      }
+    }
+    xhr.send();
+  } catch(e) {
+    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    return;
+  }
+}
+
+function addCitedNode(response){
+  if(response == '[]') {
+    document.getElementById("status").innerHTML = "引用されている論文が0件でした。";
+    return;
+  }
+  var json = JSON.parse(response);
+  // 取得アルゴリズム
+  console.log(json[0]);
+  console.log(Object.keys(json).length)
+  var tmp_array = [...Array(Object.keys(json).length)].map((_, i) => i);
+  arrayShuffle(tmp_array);
+  var target = json[0];
+  var addflg = 0;
+  for(var i = 0 ; i < tmp_array.length ; i++){
+    target = json[tmp_array[i]];
+    if( !dois.includes(target.citing) ){
+      addflg = 1;
+      break;
+    }
+  }
+  if(addflg == 0) {
+    document.getElementById("status").innerHTML = "追加できる論文がありませんでした。";
+    return;
+  }
+  var cited = target.cited;
+  var citing = target.citing;
+  console.log("cited:"+cited+"  citing:"+citing);
+  
+  try {
+    var url = 'https://opencitations.net/index/coci/api/v1/metadata/'+citing;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+      try {
+        if(xhr.readyState == 4) {
+          if(xhr.status == 200) {
+            var json2 = JSON.parse(xhr.responseText);
+            var title = json2[0].title;
+            var year = json2[0].year;
+            var doi = json2[0].doi;
+            var author = json2[0].author;
+            var source_title = json2[0].source_title;
+            console.log("title:"+title+"\nyear:"+year+"\ndoi:"+doi+"\nauthor:"+author+"\nsource_title:"+source_title);
+            //if(!years.includes(year)){
+            //  cy.add({group:'nodes',data:{id: year, color1: '#EDEDED'}});
+            //  years.push(year);
+            //}
+            cy.add({group:'nodes',data:{id: doi, no: cy.$('node[year]').length+1, title: title, color1: '#FFA41B', year: year, EN: 'title' , author: author ,source_title: source_title}});
+            dois.push(doi);
+            cy.add({group:'edges',data: {source: cited, target: citing}});
+            cy.layout({name:'dagre'}).run();
+            cy.fit();
+            drawTabulator();
+          } else {
+            //alert("error:" + xhr.status + "," + xhr.responseText);
+          }
+        }
+      } catch (e) {
+        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        return;
+      }
+    }
+    xhr.send();
+  } catch(e) {
+    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    return;
+  }
+}
+
+
 function drawTabulator(){
 	//初期化
 	tabulator_data = [];
 	//nodeの論文データ取得
-	cy.$('node[parent]').forEach(function(ele){tabulator_data.push({id:ele.data("id"), title:ele.data("title"), year:ele.data("parent"), author:ele.data("author"), source_title:ele.data("source_title")})})
+	cy.$('node[year]').forEach(function(ele){tabulator_data.push({id:ele.data("id"), no:ele.data("no"),title:ele.data("title"), year:ele.data("year"), author:ele.data("author"), source_title:ele.data("source_title")})})
 
 	var tabulator_table = new Tabulator("#list", {
-	 	height:200, 
+	 	height:350, 
 	 	data:tabulator_data, 
 	 	//layout:"fitColumns", 
 	 	columns:[ //Define Table Columns
-		 	{title:"DOI", field:"id", formatter:"link" , formatterParams:{urlPrefix:"https://doi.org/"}},
-		 	{title:"title", field:"title"},
-		 	{title:"year", field:"year"},
-			{title:"author", field:"author"},
-			{title:"source_title", field:"source_title"},
+			{title:"No", field:"no", resizable:true},
+			{title:"DOI", field:"id", formatter:"link" , formatterParams:{urlPrefix:"https://doi.org/"}, resizable:true},
+			{title:"title", field:"title", resizable:true},
+			{title:"year", field:"year", resizable:true},
+			{title:"author", field:"author", resizable:true},
+			{title:"source_title", field:"source_title", resizable:true},
 	 	],
+	 	resizableRows:true,
 	});
 }
 
@@ -365,4 +447,9 @@ function viewReport(){
 	window.open(url);
 }
 
+
+function reDraw(){
+  cy.layout({name:'dagre'}).run();
+  cy.fit();
+}
 

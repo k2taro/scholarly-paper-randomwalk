@@ -31,7 +31,7 @@ Sun,Qing-Fu他(2010), Self-Assembled M 24 L 48 Polyhedra And Their Sharp Structu
 
 - [10.1126/science.1177894](https://doi.org/10.1126/science.1177894){:target="_blank"}  
 Tero,Atsushi他(2010), Rules For Biologically Inspired Adaptive Network Design, Science.  
-粘菌が迷路の最短経路を解くという発見を発展させ、都市の鉄道網と同じ経路を再現したり迂回路を作る能力があることも示した。
+イグノーベル賞を受賞した粘菌が迷路の最短経路を解くという発見を発展させ、都市の鉄道網と同じ経路を再現したり迂回路を作る能力があることも示した。
 
 - [10.1177/1094342018816377](https://doi.org/10.1177/1094342018816377){:target="_blank"}
 Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial Simulations, The International Journal Of High Performance Computing Applications.  

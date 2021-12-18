@@ -12,10 +12,27 @@
 ## 遊び方
 ### １．元論文を入力する
 [アプリケーション](app/rw.html){:target="_blank"}を起動します。  
-最初は元の論文を入力するところから開始します。DOIを直接入力もしくはプルダウンからあらかじめプリセットされた論文を選び「スタート」ボタンを押します。  
+最初は元の論文を入力するところから開始します。DOIを直接入力もしくはプルダウンからあらかじめプリセットされた論文を選び「スタート」ボタンを押します。数秒で最初の論文が表示されます。  
 プリセットされている論文は以下です。  
-- [10.1143/JPSJ.73.2593](https://doi.org/10.1143/JPSJ.73.2593){:target="_blank"}, 113番目の元素ニホニウム発見の主要な論文の一つ  
-- [10.1016/j.cell.2006.07.024](https://doi.org/10.1016/j.cell.2006.07.024){:target="_blank"}, 2021年ノーベル賞のiPS細胞発見の主要な論文の一つ  
+- [10.1143/JPSJ.73.2593](https://doi.org/10.1143/JPSJ.73.2593){:target="_blank"}
+Morita,Kosuke他(2004),  Experiment On The Synthesis Of Element 113 In The Reaction209Bi(70Zn,N)278113, Journal Of The Physical Society Of Japan.  
+113番目の元素ニホニウム発見の主要な論文の一つ  
+
+- [10.1016/j.cell.2006.07.024](https://doi.org/10.1016/j.cell.2006.07.024){:target="_blank"}
+Takahashi,Kazutoshi&Yamanaka,Shinya(2006), Induction Of Pluripotent Stem Cells From Mouse Embryonic And Adult Fibroblast Cultures By Defined Factors, Cell.  
+2012年ノーベル賞のiPS細胞発見の主要な論文の一つ  
+
+- [10.1126/science.1188605](https://doi.org/10.1126/science.1188605){:target="_blank"}
+Sun,Qing-Fu他(2010), Self-Assembled M 24 L 48 Polyhedra And Their Sharp Structural Switch Upon Subtle Ligand Variation, Science.
+自己組織化によって巨大中空球状分子（直径7nm、48個の有機分子と24個の金属イオン）の作成  
+
+- [10.1126/science.1177894](https://doi.org/10.1126/science.1177894){:target="_blank"}
+Tero,Atsushi他(2010), Rules For Biologically Inspired Adaptive Network Design, Science.
+粘菌が最短経路問題を解くだけでなく、都市の鉄道網と同じ経路を再現したり、迂回路を準備するなど冗長化の能力があることを示した
+
+- [10.1177/1094342018816377](https://doi.org/10.1177/1094342018816377){:target="_blank"}
+Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial Simulations, The International Journal Of High Performance Computing Applications.  
+スパコン富岳で行われたコロナウィルスの飛沫感染シミュレーションで利用されたフレームワークCUBE  
 
 <img src="image1.png" style="border: 1px black solid;">
 

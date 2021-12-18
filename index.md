@@ -26,7 +26,7 @@ Takahashi,Kazutoshi&Yamanaka,Shinya(2006), Induction Of Pluripotent Stem Cells F
 2012年ノーベル賞を受賞したiPS細胞発見の主要な論文の一つ 。マウスでのiPS細胞作製を樹立した最初の報告。 
 
 - [10.1126/science.1188605](https://doi.org/10.1126/science.1188605){:target="_blank"}  
-Sun,Qing-Fu他(2010), Self-Assembled M 24 L 48 Polyhedra And Their Sharp Structural Switch Upon Subtle Ligand Variation, Science.
+Sun,Qing-Fu他(2010), Self-Assembled M 24 L 48 Polyhedra And Their Sharp Structural Switch Upon Subtle Ligand Variation, Science.  
 自己組織化によって多くの分子を作成している藤田誠先生の研究の一つ。2010年に報告の巨大(直径7nm)な中空球状分子。    
 
 - [10.1126/science.1177894](https://doi.org/10.1126/science.1177894){:target="_blank"}  
@@ -47,6 +47,8 @@ Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial S
 
 「引用している論文を探す」「引用されている論文を探す」のいずれかをクリックすることでその論文が”_引用している_”論文、もしくは、その論文が”_引用されている_”論文、からランダムで一報追加されます。これを繰り返すことでランダムウォークできます。毎回APIにアクセスをするため数秒処理に時間がかかります。  
 同じ論文から、「引用している論文を探す」「引用されている論文を探す」の両方にもランダムウォークを伸ばすことができますし、「引用している論文を探す」の中で複数の論文にランダムウォークを伸ばすこともできます。(「引用されている論文を探す」も同様)  
+ランダムウォークした結果のネットワークは任意に動かすことができますが、「グラフを再描画する」ボタンで初期配置に戻すことができます。  
+「PNGで保存する」ボタンからネットワークを画像として保存することもできます。
 ※引用している論文もしくは引用されている論文が0件のためエラーとなる場合もあります。  
 
 <img src="image3.png" style="border: 1px black solid;">

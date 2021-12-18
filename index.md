@@ -13,28 +13,30 @@
 ### １．元論文を入力する
 [アプリケーション](app/rw.html){:target="_blank"}を起動します。  
 最初は元の論文を入力するところから開始します。DOIを直接入力もしくはプルダウンからあらかじめプリセットされた論文を選び「スタート」ボタンを押します。数秒で最初の論文が表示されます。  
+
+<img src="image1.png" style="border: 1px black solid;">
+
 プリセットされている論文は以下です。  
-- [10.1143/JPSJ.73.2593](https://doi.org/10.1143/JPSJ.73.2593){:target="_blank"}
+- [10.1143/JPSJ.73.2593](https://doi.org/10.1143/JPSJ.73.2593){:target="_blank"}  
 Morita,Kosuke他(2004),  Experiment On The Synthesis Of Element 113 In The Reaction209Bi(70Zn,N)278113, Journal Of The Physical Society Of Japan.  
-113番目の元素ニホニウム発見の主要な論文の一つ  
+113番目の元素ニホニウム発見の主要な４本の論文の一つ 。2004年に報告された最初のもの。 
 
-- [10.1016/j.cell.2006.07.024](https://doi.org/10.1016/j.cell.2006.07.024){:target="_blank"}
+- [10.1016/j.cell.2006.07.024](https://doi.org/10.1016/j.cell.2006.07.024){:target="_blank"}  
 Takahashi,Kazutoshi&Yamanaka,Shinya(2006), Induction Of Pluripotent Stem Cells From Mouse Embryonic And Adult Fibroblast Cultures By Defined Factors, Cell.  
-2012年ノーベル賞のiPS細胞発見の主要な論文の一つ  
+2012年ノーベル賞を受賞したiPS細胞発見の主要な論文の一つ 。マウスでのiPS細胞作製を樹立した最初の報告。 
 
-- [10.1126/science.1188605](https://doi.org/10.1126/science.1188605){:target="_blank"}
+- [10.1126/science.1188605](https://doi.org/10.1126/science.1188605){:target="_blank"}  
 Sun,Qing-Fu他(2010), Self-Assembled M 24 L 48 Polyhedra And Their Sharp Structural Switch Upon Subtle Ligand Variation, Science.
-自己組織化によって巨大中空球状分子（直径7nm、48個の有機分子と24個の金属イオン）の作成  
+自己組織化によって多くの分子を作成している藤田誠先生の研究の一つ。2010年に報告の巨大(直径7nm)な中空球状分子。    
 
-- [10.1126/science.1177894](https://doi.org/10.1126/science.1177894){:target="_blank"}
-Tero,Atsushi他(2010), Rules For Biologically Inspired Adaptive Network Design, Science.
-粘菌が最短経路問題を解くだけでなく、都市の鉄道網と同じ経路を再現したり、迂回路を準備するなど冗長化の能力があることを示した
+- [10.1126/science.1177894](https://doi.org/10.1126/science.1177894){:target="_blank"}  
+Tero,Atsushi他(2010), Rules For Biologically Inspired Adaptive Network Design, Science.  
+粘菌が迷路の最短経路を解くという発見を発展させ、都市の鉄道網と同じ経路を再現したり迂回路を作る能力があることも示した。
 
 - [10.1177/1094342018816377](https://doi.org/10.1177/1094342018816377){:target="_blank"}
 Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial Simulations, The International Journal Of High Performance Computing Applications.  
-スパコン富岳で行われたコロナウィルスの飛沫感染シミュレーションで利用されたフレームワークCUBE  
+スパコン富岳で行われたコロナウィルスの飛沫感染シミュレーションで利用されたフレームワークの論文。  
 
-<img src="image1.png" style="border: 1px black solid;">
 
 最初の論文が表示されます。  
 
@@ -43,8 +45,9 @@ Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial S
 
 <img src="image2.png" style="border: 1px black solid;">
 
-「引用している論文を探す」「引用されている論文を探す」のいずれかをクリックすることでその論文が”_引用している_”論文、もしくは、その論文が”_引用されている_”論文、からランダムで一報追加されます。これを繰り返すことでランダムウォークできます。  
-同じ論文から、「引用している論文を探す」「引用されている論文を探す」の両方にもランダムウォークを伸ばすことができますし、「引用している論文を探す」の中で複数の論文にランダムウォークを伸ばすこともできます。(「引用されている論文を探す」も同様)
+「引用している論文を探す」「引用されている論文を探す」のいずれかをクリックすることでその論文が”_引用している_”論文、もしくは、その論文が”_引用されている_”論文、からランダムで一報追加されます。これを繰り返すことでランダムウォークできます。毎回APIにアクセスをするため数秒処理に時間がかかります。  
+同じ論文から、「引用している論文を探す」「引用されている論文を探す」の両方にもランダムウォークを伸ばすことができますし、「引用している論文を探す」の中で複数の論文にランダムウォークを伸ばすこともできます。(「引用されている論文を探す」も同様)  
+※引用している論文もしくは引用されている論文が0件のためエラーとなる場合もあります。  
 
 <img src="image3.png" style="border: 1px black solid;">
 

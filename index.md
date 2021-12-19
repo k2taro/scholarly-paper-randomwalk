@@ -38,7 +38,6 @@ Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial S
 スパコン富岳で行われたコロナウィルスの飛沫感染シミュレーションで利用されたフレームワークの論文。  
 
 
-最初の論文が表示されます。  
 
 ### ２．ランダムウォークする
 論文をクリックすると、論文の基本情報が表示されます。  

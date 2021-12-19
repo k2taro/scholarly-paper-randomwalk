@@ -70,7 +70,7 @@ Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial S
 
 ## 利用しているデータ
 - [REST API FOR COCI, THE OPENCITATIONS INDEX OF CROSSREF OPEN DOI-TO-DOI REFERENCES](https://opencitations.net/index/coci/api/v1){:target="_blank"}.
-- [Scimago Journal & Country Rank](http://www.scimagojr.com/){:target="_blank"}(サマリのみ), retrieved 2021-09-12.
+- [Scimago Journal & Country Rank](http://www.scimagojr.com/){:target="_blank"}(レポートのみ), retrieved 2021-09-12.
 
 ## ライセンス
 本アプリケーションならびに付属の説明資料等はすべて[クリエイティブ・コモンズ国際 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.ja){:target="_blank"}です。  

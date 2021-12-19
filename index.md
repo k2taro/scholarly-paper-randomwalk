@@ -33,7 +33,7 @@ Sun,Qing-Fu他(2010), Self-Assembled M 24 L 48 Polyhedra And Their Sharp Structu
 Tero,Atsushi他(2010), Rules For Biologically Inspired Adaptive Network Design, Science.  
 イグノーベル賞を受賞した粘菌が迷路の最短経路を解くという発見を発展させ、都市の鉄道網と同じ経路を再現したり迂回路を作る能力があることも示した。
 
-- [10.1177/1094342018816377](https://doi.org/10.1177/1094342018816377){:target="_blank"}
+- [10.1177/1094342018816377](https://doi.org/10.1177/1094342018816377){:target="_blank"}  
 Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial Simulations, The International Journal Of High Performance Computing Applications.  
 スパコン富岳で行われたコロナウィルスの飛沫感染シミュレーションで利用されたフレームワークの論文。  
 
@@ -59,6 +59,15 @@ Jansson,Niclas他(2018), Cube: A Scalable Framework For Large-Scale Industrial S
 レポート画面にある「レポート出力」ボタンからhtmlページとしてダウンロードすることもできます。  
 
 <img src="image4.png" style="border: 1px black solid;">
+
+### アプリ上の項目の説明
+- No: ランダムウォークで追加していった連番です。
+- DOI: 論文のDOIです。
+- title: 論文のタイトルです。
+- year: 論文の発行年です。
+- author: 論文の著者です。
+- source_title: 論文が収録された雑誌名や会議名などのタイトルです。
+
 
 ## 利用しているデータ
 - [REST API FOR COCI, THE OPENCITATIONS INDEX OF CROSSREF OPEN DOI-TO-DOI REFERENCES](https://opencitations.net/index/coci/api/v1){:target="_blank"}.

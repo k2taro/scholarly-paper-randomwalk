@@ -14,13 +14,13 @@ var cy = window.cy = cytoscape({
             selector: 'node',
             style: {
                 //'content': 'data(title)',
-                'content': function(e) {return 'No.' + e.data('no') + ',' + e.data('year') + ':' + cutStr(e.data('title'))},
+                'content': function(e) {return '#' + e.data('no') + ',' + e.data('year') + ':' + cutStr(e.data('title'))},
                 'width': '200',
                 'height': '200',
                 'text-opacity': 4,
                 'text-valign': 'center',
                 'text-halign': 'center',
-                'font-size': '40',
+                'font-size': '60',
                 'background-color': 'data(color1)'
             }
         },
@@ -84,7 +84,7 @@ var makeTippy = function(node, text) {
             var author = node.data('author');
             var source_title = node.data('source_title');
             var div = document.createElement('div');
-                div.innerHTML = '<p>No.' + no + '</p><p>'+ cutStr(title) +'</p><p>doi : <a href = "https://doi.org/' + doi + '" target="_blank">' + doi + '</a></p><p>year : ' + year + '</p><p>author : ' + cutStr(author) + '</p><p>source_title : ' + cutStr(source_title) + '</p><p><form><input type="button" id="'+doi+'" value="引用している論文を探す" onclick="getCiting(this.id)" ></form></p><p><form><input type="button" id="'+doi+'" value="引用されている論文を探す" onclick="getCited(this.id)" ></form></p>';
+                div.innerHTML = '<p>#' + no + '</p><p>'+ title +'</p><p>doi : <a href = "https://doi.org/' + doi + '" target="_blank">' + doi + '</a></p><p>year : ' + year + '</p><p>author : ' + author + '</p><p>source_title : ' + source_title + '</p><p><form><input type="button" id="'+doi+'" value="引用している論文を探す" onclick="getCiting(this.id)" ></form></p><p><form><input type="button" id="'+doi+'" value="引用されている論文を探す" onclick="getCited(this.id)" ></form></p>';
             return div;
         },
 
@@ -169,18 +169,19 @@ function searchDOI(){
             cy.fit();
             drawTabulator();
             document.getElementById("status").innerHTML = "　";
+            document.getElementById("message").innerHTML = "　";
           } else {
             throw new Error("error");
           }
         }
       } catch (e) {
-        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
         return;
       }
     }
     xhr.send();
   } catch(e) {
-    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
     return;
   }
 }
@@ -213,20 +214,20 @@ function getCiting(doi) {
           }
         }
       } catch (e) {
-        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
         return;
       }
     }
     xhr.send();
   } catch(e) {
-    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
     return;
   }
 }
 
 function addCitingNode(response){
   if(response == '[]') {
-    document.getElementById("status").innerHTML = "引用している論文が0件でした。";
+    document.getElementById("message").innerHTML = "引用している論文が0件でした。";
     return;
   }
   var json = JSON.parse(response);
@@ -245,7 +246,7 @@ function addCitingNode(response){
     }
   }
   if(addflg == 0) {
-    document.getElementById("status").innerHTML = "追加できる論文がありませんでした。";
+    document.getElementById("message").innerHTML = "追加できる論文がありませんでした。";
     return;
   }
   var cited = target.cited;
@@ -278,18 +279,19 @@ function addCitingNode(response){
             cy.layout({name:'dagre'}).run();
             cy.fit();
             drawTabulator();
+            document.getElementById("message").innerHTML = "　";
           } else {
             throw new Error("error");
           }
         }
       } catch (e) {
-        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
         return;
       }
     }
     xhr.send();
   } catch(e) {
-    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
     return;
   }
 }
@@ -312,20 +314,20 @@ function getCited(doi) {
           }
         }
       } catch (e) {
-        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
         return;
       }
     }
     xhr.send();
   } catch(e) {
-    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
     return;
   }
 }
 
 function addCitedNode(response){
   if(response == '[]') {
-    document.getElementById("status").innerHTML = "引用されている論文が0件でした。";
+    document.getElementById("message").innerHTML = "引用されている論文が0件でした。";
     return;
   }
   var json = JSON.parse(response);
@@ -344,7 +346,7 @@ function addCitedNode(response){
     }
   }
   if(addflg == 0) {
-    document.getElementById("status").innerHTML = "追加できる論文がありませんでした。";
+    document.getElementById("message").innerHTML = "追加できる論文がありませんでした。";
     return;
   }
   var cited = target.cited;
@@ -377,18 +379,19 @@ function addCitedNode(response){
             cy.layout({name:'dagre'}).run();
             cy.fit();
             drawTabulator();
+            document.getElementById("message").innerHTML = "　";
           } else {
             //alert("error:" + xhr.status + "," + xhr.responseText);
           }
         }
       } catch (e) {
-        document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+        document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
         return;
       }
     }
     xhr.send();
   } catch(e) {
-    document.getElementById("status").innerHTML = "論文が取得できませんでした。やり直してみてください。";
+    document.getElementById("message").innerHTML = "論文が取得できませんでした。やり直してみてください。";
     return;
   }
 }
@@ -405,14 +408,14 @@ function drawTabulator(){
 	 	data:tabulator_data, 
 	 	//layout:"fitColumns", 
 	 	columns:[ //Define Table Columns
-			{title:"No", field:"no", resizable:true},
-			{title:"DOI", field:"id", formatter:"link" , formatterParams:{urlPrefix:"https://doi.org/"}, resizable:true},
-			{title:"title", field:"title", resizable:true},
-			{title:"year", field:"year", resizable:true},
-			{title:"author", field:"author", resizable:true},
-			{title:"source_title", field:"source_title", resizable:true},
+			{title:"No", field:"no", width:55},
+			{title:"DOI", field:"id", formatter:"link" , formatterParams:{urlPrefix:"https://doi.org/"}, width:200},
+			{title:"title", field:"title", width:400, formatter:"textarea"},
+			{title:"year", field:"year", width:70},
+			{title:"author", field:"author", width:400, formatter:"textarea"},
+			{title:"source_title", field:"source_title", width:400, formatter:"textarea"},
 	 	],
-	 	resizableRows:true,
+	 	//resizableRows:true,
 	});
 }
 
